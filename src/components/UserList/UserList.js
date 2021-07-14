@@ -7,10 +7,22 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
 
 const UserList = ({ users, isLoading }) => {
+
   const [hoveredUserId, setHoveredUserId] = useState();
+  const [countryFiltersList, setCountryFiltersList] = useState([]);
+
+  const filteredList = () => {
+    return (countryFiltersList.length > 0)? users.filter(user => countryFiltersList.includes(user.location.country)) : users;
+  };
+
+  const onCheckboxChange = (countryFilter) => {
+    (countryFiltersList.includes(countryFilter))?
+     setCountryFiltersList(countryFiltersList.filter(country => country !== countryFilter)):
+      setCountryFiltersList(currentCountryFiltersList => [...currentCountryFiltersList, countryFilter]);
+  };
 
   const handleMouseEnter = (index) => {
-    setHoveredUserId(index);
+    setHoveredUserId(index);  
   };
 
   const handleMouseLeave = () => {
@@ -20,13 +32,14 @@ const UserList = ({ users, isLoading }) => {
   return (
     <S.UserList>
       <S.Filters>
-        <CheckBox value="BR" label="Brazil" />
-        <CheckBox value="AU" label="Australia" />
-        <CheckBox value="CA" label="Canada" />
-        <CheckBox value="DE" label="Germany" />
+        <CheckBox value="BR" label="Brazil" onChange={() => onCheckboxChange('Brazil')}/>
+        <CheckBox value="AU" label="Australia" onChange={() => onCheckboxChange('Australia')}/>
+        <CheckBox value="CA" label="Canada" onChange={() => onCheckboxChange('Canada')}/>
+        <CheckBox value="DE" label="Germany" onChange={() => onCheckboxChange('Germany')}/>
+        <CheckBox value="US" label="United States" onChange={() => onCheckboxChange('United States')}/>
       </S.Filters>
       <S.List>
-        {users.map((user, index) => {
+        {filteredList().map((user, index) => {
           return (
             <S.User
               key={index}
