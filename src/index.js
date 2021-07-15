@@ -1,5 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import AppRouter from "AppRouter";
+import ContextProvider from "store/ContextProvider";
 
-ReactDOM.render(<AppRouter />, document.querySelector("#root"));
+ReactDOM.render(
+<ContextProvider>
+<AppRouter />
+</ContextProvider>
+, document.querySelector("#root"));
