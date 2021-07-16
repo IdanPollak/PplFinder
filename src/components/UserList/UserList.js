@@ -7,9 +7,10 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import Context from 'store/Context';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import * as S from "./style";
 
-const UserList = ({ users, isLoading }) => {
+const UserList = ({ users, isLoading, page, setPage }) => {
 
   const [hoveredUserId, setHoveredUserId] = useState();
   const [countryFiltersList, setCountryFiltersList] = useState([]);
@@ -37,8 +38,8 @@ const UserList = ({ users, isLoading }) => {
 
   const onUserClick = (clickedUser) => {
     let newFavoritesList = [];
-    if(context.favoritesList.includes(clickedUser)) {
-      newFavoritesList = context.favoritesList.filter(favoriteUser => favoriteUser !== clickedUser);
+    if(context.favoritesList.map(({login}) => login.uuid).includes(clickedUser.login.uuid)) {
+      newFavoritesList = context.favoritesList.filter(favoriteUser => favoriteUser.login.uuid !== clickedUser.login.uuid);
       setErrorMsg(true);
     }
     else {
@@ -68,6 +69,11 @@ const UserList = ({ users, isLoading }) => {
         <CheckBox value="US" label="United States" onChange={() => onCheckboxChange('United States')}/>
       </S.Filters>
       <S.List>
+      <InfiniteScroll
+        dataLength={users.length}
+        next={()=> setPage(page + 1)}
+        hasMore={page < 200} >
+        
         {filteredList().map((user, index) => {
           return (
             <S.User
@@ -88,7 +94,7 @@ const UserList = ({ users, isLoading }) => {
                   {user?.location.city} {user?.location.country}
                 </Text>
               </S.UserInfo>
-              <S.IconButtonWrapper isVisible={context.favoritesList.includes(user) || index === hoveredUserId}>
+              <S.IconButtonWrapper isVisible={context.favoritesList.map(({login}) => login.uuid).includes(user.login.uuid) || index === hoveredUserId}>
                 <IconButton onClick={() => onUserClick(user)}>
                   <FavoriteIcon color="error" />
                 </IconButton>
@@ -101,6 +107,7 @@ const UserList = ({ users, isLoading }) => {
             <Spinner color="primary" size="45px" thickness={6} variant="indeterminate" />
           </S.SpinnerWrapper>
         )}
+      </InfiniteScroll>
       </S.List>
       <Snackbar open={successMsg} autoHideDuration={3000} onClose={handleClose}>
       <Alert onClose={handleClose} severity="success" variant="filled">
