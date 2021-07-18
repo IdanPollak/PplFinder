@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const UserList = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -18,6 +18,7 @@ export const User = styled.div`
   display: flex;
   justify-content: center;
   gap: 16px;
+  margin-bottom: 10px;
 `;
 
 export const UserInfo = styled.div`
@@ -28,6 +29,9 @@ export const UserInfo = styled.div`
   max-height: 128px;
   gap: 2px;
   overflow: hidden;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export const UserPicture = styled.img`
@@ -52,4 +56,5 @@ export const Filters = styled.div`
   & > * {
     margin-inline-end: 8px;
   }
+  margin-top: 15px;
 `;

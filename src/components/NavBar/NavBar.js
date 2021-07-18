@@ -5,10 +5,14 @@ import Tab from "@material-ui/core/Tab";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
-  const [value, setValue] = useState(sessionStorage.getItem('tabValue') === null? 0 : JSON.parse(sessionStorage.getItem('tabValue')));
+  const [value, setValue] = useState(
+    sessionStorage.getItem("tabValue") === null
+      ? 0
+      : JSON.parse(sessionStorage.getItem("tabValue"))
+  );
 
   const handleChange = (_e, newValue) => {
-    sessionStorage.setItem('tabValue', newValue);
+    sessionStorage.setItem("tabValue", JSON.stringify(newValue));
     setValue(newValue);
   };
 
