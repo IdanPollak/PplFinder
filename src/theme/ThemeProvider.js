@@ -1,31 +1,25 @@
-import React from "react";
-import { createMuiTheme, ThemeProvider as Provider } from "@material-ui/core/styles";
+import React, { useContext } from "react";
+import { createTheme, ThemeProvider as Provider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Context from "../store/Context";
 
 const ThemeProvider = ({ children }) => {
-  const overrides = {
-    MuiTab: {
-      root: {
-        backgroundColor: "#303030",
+  const context = useContext(Context);
+
+  const theme = createTheme({
+    palette: {
+      type: context.palletType,
+      primary: {
+        main: "#13DADD",
+      },
+      secondary: {
+        main: "#E711B7",
+      },
+      error: {
+        main: "#f06292",
       },
     },
-  };
-  const theme = React.useMemo(
-    () =>
-      createMuiTheme({
-        overrides,
-        palette: {
-          type: "dark",
-          primary: {
-            main: "#84ffff",
-          },
-          error: {
-            main: "#f06292",
-          },
-        },
-      }),
-    []
-  );
+  });
 
   return (
     <Provider theme={theme}>

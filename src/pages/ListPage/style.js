@@ -20,11 +20,3 @@ export const Content = styled.div`
 export const Header = styled.div`
   display: flex;
 `;
-
-export const Form = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  max-width: 400px;
-  width: 100%;
-`;
