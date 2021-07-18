@@ -33,11 +33,11 @@ const UserModal = ({
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "30%",
+            width: "35%",
           }}
         >
           <CardActionArea style={{ cursor: "auto" }}>
-            <CardMedia component="img" height="700px" image={img} />
+            <CardMedia component="img" height="500px" image={img} />
             <CardContent>
               <Typography gutterBottom variant="h4" component="h2">
                 {fullName}
